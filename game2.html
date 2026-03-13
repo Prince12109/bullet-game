@@ -55,7 +55,7 @@
     </div>
 
     <script>
-        // ---- Canvas & Elements ----
+        
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -63,8 +63,6 @@
         const rightBtn = document.getElementById('rightBtn');
         const restartBtn = document.getElementById('restartBtn');
         const scoreBoard = document.getElementById('scoreBoard');
-
-        // ---- Game State ----
         let score = 0;
 
         const player = {
@@ -80,8 +78,6 @@
 
         let leftPressed = false;
         let rightPressed = false;
-
-        // ---- Functions ----
         function fireBullet() {
             bullets.push({
                 x: player.x + player.width / 2 - 2,
@@ -111,15 +107,14 @@
         }
 
         function update() {
-            // Move player
+             
             if (leftPressed && player.x > 0) {
                 player.x -= player.speed;
             }
             if (rightPressed && player.x + player.width < canvas.width) {
                 player.x += player.speed;
             }
-
-            // Move bullets
+ 
             for (let i = 0; i < bullets.length; i++) {
                 bullets[i].y -= bullets[i].speed;
                 if (bullets[i].y < 0) {
@@ -128,18 +123,17 @@
                 }
             }
 
-            // Move enemies
+             
             for (let i = 0; i < enemies.length; i++) {
                 enemies[i].y += enemies[i].speed;
 
-                // Game Over if enemy reaches the bottom
+                
                 if (enemies[i].y > canvas.height) {
                     alert("GAME OVER! Final Score: " + score);
                     document.location.reload();
                 }
             }
 
-            // Bullet-Enemy Collision
             for (let i = 0; i < bullets.length; i++) {
                 for (let j = 0; j < enemies.length; j++) {
                     if (isColliding(bullets[i], enemies[j])) {
@@ -157,17 +151,16 @@
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Player
+           
             ctx.fillStyle = '#0095DD';
             ctx.fillRect(player.x, player.y, player.width, player.height);
-
-            // Bullets
+ 
             ctx.fillStyle = '#FF0000';
             bullets.forEach(bullet => {
                 ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
             });
 
-            // Enemies
+           
             ctx.fillStyle = '#27ae60';
             enemies.forEach(enemy => {
                 ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
@@ -180,7 +173,7 @@
             requestAnimationFrame(gameLoop);
         }
 
-        // ---- Keyboard Controls ----
+        
         document.addEventListener('keydown', e => {
             if (e.key === 'ArrowLeft') leftPressed = true;
             if (e.key === 'ArrowRight') rightPressed = true;
@@ -191,7 +184,7 @@
             if (e.key === 'ArrowRight') rightPressed = false;
         });
 
-        // ---- Mobile / Mouse Button Controls ----
+        
         leftBtn.addEventListener('touchstart', () => leftPressed = true);
         leftBtn.addEventListener('touchend', () => leftPressed = false);
         leftBtn.addEventListener('mousedown', () => leftPressed = true);
@@ -202,17 +195,18 @@
         rightBtn.addEventListener('mousedown', () => rightPressed = true);
         rightBtn.addEventListener('mouseup', () => rightPressed = false);
 
-        // ---- Restart Button ----
+       
         restartBtn.addEventListener('click', () => {
             document.location.reload();
         });
 
-        // ---- Auto Fire & Enemy Spawn ----
+        
         setInterval(fireBullet, 100);
         setInterval(spawnEnemy, 1000);
 
-        // ---- Start Game ----
+       
         gameLoop();
     </script>
 </body>
 </html>
+
